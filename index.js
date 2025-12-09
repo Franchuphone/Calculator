@@ -1,90 +1,153 @@
 function add( a, b ) {
-    return a + b;
+    return num2 = a + b;
 }
 
-function substract( a, b ) {
-    return a - b;
-}
-
-function multiply( a, b ) {
-    return a * b;
-}
-
-function divide( a, b ) {
-    if ( b = 0 ) alert( "Dividing by 0 is not accepted" )
-    return a / b;
-}
-
-function operate( operator, num1, num2 ) {
-    switch ( operator ) {
-        case "+":
-            add( num1, num2 );
-            break;
-        case "-":
-            substract( num1, num2 );
-            break;
-        case "x":
-            multiply( num1, num2 );
-            break;
-        case "/":
-            divide( num1, num2 );
-            break;
-        case "=":
-            calculate()
-            break
-    }
+function alertUser( str ) {
+    const body = document.querySelector( "body" );
+    const alertDiv = document.createElement( "div" )
+    alertDiv.className = "alert-container border-grey alert-text";
+    alertDiv.textContent = str;
+    body.appendChild( alertDiv );
 }
 
 function chooseNumber() {
-    numBtn.forEach( ( btn ) => btn.addEventListener( "click", retrieveNum ) );
+    numBtn.forEach( ( btn ) => btn.addEventListener( "click", () => {
+        clearAlertUser();
+        if ( !num1 ) num1 = "";
+        if ( ope === "=" ) displayOpe( "" );
+        num1 += btn.textContent;
+        desactivateDotBtn();
+        displayNum( num1 );
+    } ) );
 }
 
 function chooseOperator() {
-    opeBtn.forEach( ( btn ) => btn.addEventListener( "click", () => ope = btn.textContent ) );
-}
-
-function retrieveNum() {
-    num += this.textContent;
-    display( num );
-    return num;
-}
-
-function display( num ) {
-    const resultsBox = document.querySelector( "div.results" )
-    resultsBox.textContent = num;
+    opeBtn.forEach( ( btn ) => btn.addEventListener( "click", () => {
+        clearAlertUser();
+        handleOpeError( btn.textContent );
+    } ) );
 }
 
 function clear() {
     document.querySelector( "button.clear" ).addEventListener( "click", () => {
-        display( "0" );
-        eraseMemory();
+        displayNum( "0" );
+        displayOpe( "" );
+        clearNum();
+        clearOpe();
     } );
 }
 
-function calculate() {
-    const equalBtn = document.querySelector( "button.operators:last-child" );
-    equalBtn.addEventListener( "click", () => {
-        num1 = num;
-        console.log( num1 )
-    } )
+function clearAlertUser() {
+    const alertDiv = document.querySelectorAll( "div.alert-container" );
+    alertDiv.forEach( ( div ) => {
+        if ( div ) div.remove();
+    } );
 }
 
-function eraseMemory() {
+function desactivateDotBtn() {
+    if ( num1.includes( "." ) ) {
+        document.querySelector( "button.dot" ).disabled = true;
+    }
+}
+
+function clearNum() {
+    num1 = null;
+    num2 = null;
+}
+
+function clearOpe() {
+    ope = null;
+}
+
+function displayNum( num ) {
+    const resultsBox = document.querySelector( "div.results" )
+    resultsBox.textContent = num;
+}
+
+function displayOpe( ope ) {
+    const resultsBox = document.querySelector( "div.operator" )
+    resultsBox.textContent = ope;
+}
+
+function divide( a, b ) {
+    if ( b == 0 ) {
+        alertUser( "Division by 0 are not permitted" );
+        clearNum();
+        return;
+    }
+    return num2 = a / b;
+}
+
+function handleOpeError( operator ) {
+    if ( !num1 ) {
+        alertUser( "Choose a number please" );
+        displayNum( num2 );
+        ( !num2 ) ? displayOpe( "" ) : displayOpe( ope );
+        return
+    }
+    operate( ope, +num1, +num2 );
+    terminate( operator );
+    ope = operator;
+    displayOpe( ope );
     num1 = "";
-    num2 = "5";
-    num = "";
-    ope = "";
 }
 
+function multiply( a, b ) {
+    return num2 = a * b;
+}
+
+function operate( operator, currNum, totalNum ) {
+    if ( !num2 ) {
+        num2 = num1;
+    } else {
+        switch ( operator ) {
+            case "+":
+                add( totalNum, currNum );
+                break;
+            case "-":
+                substract( totalNum, currNum );
+                break;
+            case "×":
+                multiply( totalNum, currNum );
+                break;
+            case "÷":
+                divide( totalNum, currNum );
+                break;
+            default:
+                break;
+        }
+    }
+    document.querySelector( "button.dot" ).removeAttribute( "disabled" );
+    roundNumber( num2 );
+    displayNum( num2 );
+}
+
+function roundNumber( num ) {
+    if ( num == Math.floor( num ) ) {
+        return
+    } else {
+        num2 = Math.round( num * 100000000 ) / 100000000
+    }
+}
+
+function substract( a, b ) {
+    return num2 = a - b;
+}
+
+function terminate( ope ) {
+    if ( ope === "=" ) {
+        clearNum();
+        displayOpe( "=" );
+        clearOpe();
+    };
+}
+
+let num1;
+let num2;
+let ope;
 const numBtn = document.querySelectorAll( "button.numbers" );
 const opeBtn = document.querySelectorAll( "button.operators" );
-let num = "";
-let num1 = "";
-let num2 = "";
-let ope = "";
 
 chooseNumber();
-calculate();
+chooseOperator();
 clear();
-
-

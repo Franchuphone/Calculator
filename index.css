@@ -6,12 +6,17 @@
 
 button {
     width: 30%;
+    border: none;
 }
 
+.alert-container,
 .container {
     background-color: rgb(226, 223, 223);
     margin: 4rem auto;
     width: 30%;
+}
+
+.container {
     aspect-ratio: 1;
 }
 
@@ -74,8 +79,17 @@ button {
     font-weight: 300;
 }
 
+.operator {
+    width: 18%;
+}
+
 .results {
+    width: 100%;
     flex: 1 1;
+}
+
+.operator,
+.results {
     background-color: rgb(221, 221, 200);
     color: rgb(126, 126, 139);
     border-radius: 1rem;
@@ -83,17 +97,13 @@ button {
     margin: auto;
     font-size: 3vw;
     font-weight: bold;
-    width: 100%;
 }
 
-.clear {
-    background-color: rgb(186, 186, 204);
-    color: rgb(221, 221, 200);
-    border-radius: 1rem;
-    margin-right: 0;
-    height: 40%;
-    width: 30%;
-    font-size: 1vw;
+.alert-text {
+    font-size: 2.3vw;
+    color: rgb(179, 59, 59);
+    padding: 0.5rem;
+    text-align: center;
 }
 
 .clear:hover,
@@ -105,29 +115,32 @@ button {
 .clear:active,
 .numbers:active,
 .operators:active {
-    box-shadow: inset 1px 1px 1px #000000;
+    box-shadow: inset 2px 2px 2px rgb(102, 101, 101);
 }
 
+button,
 .border-grey {
     border: 2px solid rgb(175, 173, 173);
     border-radius: 1rem;
 }
 
 @media (max-width: 1200px) {
+
+    .alert-container,
     .container {
         width: 50%;
     }
 }
 
 @media (max-width: 800px) {
+
+    .alert-container,
     .container {
         width: 80%;
     }
 
-    .numbers {
-        font-size: 3vw;
-    }
-
+    .alert-text,
+    .numbers,
     .operators {
         font-size: 3vw;
     }
