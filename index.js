@@ -11,25 +11,29 @@ function alertUser( str ) {
 }
 
 function chooseNumber() {
-    numBtn.forEach( ( btn ) => btn.addEventListener( "click", () => {
+    numBtn.forEach( ( btn ) => btn.addEventListener( "mousedown", () => {
         clearAlertUser();
-        if ( !num1 ) num1 = "";
-        if ( ope === "=" ) displayOpe( "" );
-        num1 += btn.textContent;
+        cleanNum( btn.textContent );
         desactivateDotBtn();
         displayNum( num1 );
     } ) );
 }
 
+function cleanNum( num ) {
+    if ( !num1 ) num1 = "";
+    if ( ope === "=" ) displayOpe( "" );
+    num1 += num;
+}
+
 function chooseOperator() {
-    opeBtn.forEach( ( btn ) => btn.addEventListener( "click", () => {
+    opeBtn.forEach( ( btn ) => btn.addEventListener( "mousedown", () => {
         clearAlertUser();
         handleOpeError( btn.textContent );
     } ) );
 }
 
 function clear() {
-    document.querySelector( "button.clear" ).addEventListener( "click", () => {
+    document.querySelector( "button.clear" ).addEventListener( "mousedown", () => {
         displayNum( "0" );
         displayOpe( "" );
         clearNum();

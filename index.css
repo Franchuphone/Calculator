@@ -148,8 +148,17 @@ button,
     .results {
         font-size: 4vw;
     }
+}
 
-    .clear {
-        font-size: 2vw;
+@media (max-width: 300px) {
+
+    .alert-text,
+    .numbers,
+    .operators {
+        font-size: 4vw;
+    }
+
+    .results {
+        font-size: 5vw;
     }
 }
