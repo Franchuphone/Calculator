@@ -22,7 +22,17 @@ function chooseNumber() {
 function cleanNum( num ) {
     if ( !num1 ) num1 = "";
     if ( ope === "=" ) displayOpe( "" );
-    num1 += num;
+    if ( num1.length <= 9 ) num1 += num;
+}
+
+function cleanResults( num2 ) {
+    if ( !num2 ) return;
+    else num2 = num2.toString();
+    if ( num2.length > 10 ) {
+        num2 = +num2;
+        num2 = num2.toExponential( 3 );
+    }
+    return num2.toString();
 }
 
 function chooseOperator() {
@@ -85,7 +95,7 @@ function divide( a, b ) {
 function handleOpeError( operator ) {
     if ( !num1 ) {
         alertUser( "Choose a number please" );
-        displayNum( num2 );
+        displayNum( cleanResults( num2 ) );
         ( !num2 ) ? displayOpe( "" ) : displayOpe( ope );
         return
     }
@@ -122,16 +132,7 @@ function operate( operator, currNum, totalNum ) {
         }
     }
     document.querySelector( "button.dot" ).removeAttribute( "disabled" );
-    roundNumber( num2 );
-    displayNum( num2 );
-}
-
-function roundNumber( num ) {
-    if ( num == Math.floor( num ) ) {
-        return
-    } else {
-        num2 = Math.round( num * 100000000 ) / 100000000
-    }
+    displayNum( cleanResults( num2 ) );
 }
 
 function substract( a, b ) {
